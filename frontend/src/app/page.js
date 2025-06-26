@@ -75,10 +75,10 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center">
               <div className="relative">
                 <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6">
-                  Research shouldn't be limited to lab settings.
+                  Research shouldn&apos;t be limited to lab settings.
                 </p>
                 <p className="text-lg sm:text-xl md:text-2xl leading-relaxed opacity-80 max-w-3xl mx-auto">
-                  We're bringing clinical trials directly to participants —
+                  We&apos;re bringing clinical trials directly to participants —
                   making medical research more accessible, inclusive, and
                   representative of real-world conditions.
                 </p>
@@ -162,7 +162,7 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center">
               <div className="relative">
                 <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6 text-primary">
-                  Security and transparency aren't optional.
+                  Security and transparency aren&apos;t optional.
                 </p>
                 <p className="text-lg sm:text-xl md:text-2xl leading-relaxed opacity-70 max-w-3xl mx-auto text-secondary-foreground">
                   Every interaction, payment, and data point is protected by
@@ -218,7 +218,7 @@ export default function Home() {
                   Open, anonymized progress reporting
                 </h3>
                 <p className="text-secondary-foreground/70 text-sm leading-relaxed">
-                  Track your trial's progress and impact while maintaining
+                  Track your trial&apos;s progress and impact while maintaining
                   complete participant anonymity
                 </p>
               </div>
