@@ -29,12 +29,12 @@ export default function Home() {
 
             {/* Buttons */}
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6">
-              <Button className="text-base sm:text-lg px-8 py-3">
+              <Button className="text-base sm:text-lg px-8 py-3  justify-center">
                 Join a Trial
               </Button>
               <Button
                 variant="outline"
-                className="text-base sm:text-lg px-8 py-3"
+                className="text-base sm:text-lg px-8 py-3 justify-center"
               >
                 Explore How It Works
               </Button>
@@ -72,12 +72,12 @@ export default function Home() {
           </div>
 
           <div className="space-y-16 md:space-y-20">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto text-center sm:text-center">
               <div className="relative">
-                <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6">
+                <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6 text-left sm:text-center">
                   Research shouldn&apos;t be limited to lab settings.
                 </p>
-                <p className="text-lg sm:text-xl md:text-2xl leading-relaxed opacity-80 max-w-3xl mx-auto">
+                <p className="text-lg sm:text-xl md:text-2xl leading-relaxed opacity-80 max-w-3xl mx-auto text-left sm:text-center">
                   We&apos;re bringing clinical trials directly to participants —
                   making medical research more accessible, inclusive, and
                   representative of real-world conditions.
@@ -159,7 +159,7 @@ export default function Home() {
           </div>
 
           <div className="space-y-16 md:space-y-20">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto md:text-center">
               <div className="relative">
                 <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6 text-primary">
                   Security and transparency aren&apos;t optional.
@@ -279,7 +279,7 @@ export default function Home() {
           </div>
 
           <div className="space-y-16 md:space-y-20">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto md:text-center">
               <div className="relative">
                 <p className="text-2xl sm:text-3xl md:text-4xl leading-relaxed font-light mb-6">
                   Only verified trials. Only certified professionals.
@@ -394,16 +394,19 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-6 sm:flex-row sm:justify-center sm:gap-8 max-w-lg mx-auto">
-              <Button className="text-lg px-10 py-4 h-auto">
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center sm:gap-6 max-w-lg mx-auto">
+              <Button className="text-base sm:text-lg px-8 py-3 justify-center">
                 Sign Up for a Trial
               </Button>
-              <div className="flex items-center justify-center">
-                <span className="text-secondary-foreground/60 font-light">
+              <div className="flex items-center justify-start sm:justify-center">
+                <span className="text-secondary-foreground/60 font-light text-center mx-auto">
                   or
                 </span>
               </div>
-              <Button variant="outline" className="text-lg px-10 py-4 h-auto">
+              <Button
+                variant="outline"
+                className="text-base sm:text-lg px-8 py-3 justify-start justify-center"
+              >
                 Learn More About Our Process
               </Button>
             </div>
