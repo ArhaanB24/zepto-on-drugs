@@ -99,7 +99,7 @@
 }
 
 :root {
-  --radius: 65rem;
+  --radius: 0.65rem;
 
   /* Light Background */
   --background: oklch(0.993 0 0); /* rgb(251, 251, 251) */
