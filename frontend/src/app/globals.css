@@ -1,0 +1,164 @@
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-Regular-BF644b214ff145f.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-Italic-BF644b214fb0c0a.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-Ultralight-BF644b21500d0c0.otf")
+    format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-UltralightItalic-BF644b214ff1e9b.otf")
+    format("opentype");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-Ultrabold-BF644b21500840c.otf")
+    format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("/fonts/PPEditorialNew-UltraboldItalic-BF644b214faef01.otf")
+    format("opentype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-editorial: "PP Editorial New", serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.65rem;
+
+  /* Light Background */
+  --background: oklch(0.993 0 0); /* rgb(251, 251, 251) */
+  --foreground: oklch(0.18 0.01 265.4); /* dark text */
+
+  /* Cards & Popovers match background */
+  --card: oklch(0.993 0 0);
+  --card-foreground: oklch(0.18 0.01 265.4);
+
+  --popover: oklch(0.993 0 0);
+  --popover-foreground: oklch(0.18 0.01 265.4);
+
+  /* Primary: Cobalt Blue */
+  --primary: oklch(0.547 0.26 265.4); /* #0D3DFF */
+  --primary-foreground: oklch(0.98 0.01 265.4); /* light text on cobalt */
+
+  /* Secondary: Desaturated light blue */
+  --secondary: oklch(0.91 0.02 265.4);
+  --secondary-foreground: oklch(0.25 0.01 265.4);
+
+  /* Muted: Light gray-blue */
+  --muted: oklch(0.92 0.005 265.4);
+  --muted-foreground: oklch(0.5 0.015 265.4);
+
+  /* Accent (optional hover/cta) */
+  --accent: oklch(0.93 0.015 265.4);
+  --accent-foreground: oklch(0.25 0.01 265.4);
+
+  /* Destructive (warning/danger red) */
+  --destructive: oklch(0.577 0.245 27.325);
+
+  /* Border/Input/Ring – light border with cobalt emphasis */
+  --border: oklch(0.88 0.004 265.4);
+  --input: oklch(0.88 0.004 265.4);
+  --ring: oklch(0.547 0.26 265.4);
+
+  /* Charts – Optional adjustments */
+  --chart-1: oklch(0.547 0.26 265.4); /* cobalt */
+  --chart-2: oklch(0.52 0.18 295); /* purple */
+  --chart-3: oklch(0.6 0.14 230); /* blue-ish */
+  --chart-4: oklch(0.8 0.2 70); /* gold */
+  --chart-5: oklch(0.7 0.15 90); /* orange */
+
+  /* Sidebar on light theme */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.18 0.01 265.4);
+  --sidebar-primary: oklch(0.547 0.26 265.4);
+  --sidebar-primary-foreground: oklch(0.98 0.01 265.4);
+  --sidebar-accent: oklch(0.91 0.02 265.4);
+  --sidebar-accent-foreground: oklch(0.25 0.01 265.4);
+  --sidebar-border: oklch(0.88 0.004 265.4);
+  --sidebar-ring: oklch(0.547 0.26 265.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
