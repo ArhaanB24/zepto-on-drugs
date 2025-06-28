@@ -1,1 +1,54 @@
-# time to learn fast api
+from fastapi import FastAPI
+import os
+import firebase_admin
+from firebase_admin import credentials
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
+import requests
+from fastapi.middleware.cors import CORSMiddleware
+
+
+cred = credentials.Certificate("incubate-4b884-firebase-adminsdk-fbsvc-abcd1f9767.json")
+firebase_admin.initialize_app(cred)
+
+
+baseurl = "http://127.0.0.1:8000"
+CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+REDIRECT_URI = f"{baseurl}/auth/callback"
+AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/auth"
+TOKEN_URL = "https://oauth2.googleapis.com/token"
+USER_INFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
+
+@app.post("/auth/login")
+def login(action:str):
+    if action != "start_auth":
+        raise HTTPException(status_code=400, detail="Invalid action")
+    params = {
+        "client_id": CLIENT_ID,
+        "redirect_uri": REDIRECT_URI,
+        "response_type": "code",
+        "scope": "openid%20email%20profile",
+    }
+    auth_url = f"{AUTHORIZATION_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}"
+    return RedirectResponse(auth_url)
+
+@app.get("/auth/callback")
+def callback(code:str = None):
+    if not code:
+        raise HTTPException(status_code=400, detail="Authorization code not provided")
+    token_data = {
+        "code": code,
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "redirect_uri": REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+    token_response = requests.post(TOKEN_URL, data=token_data)
+    token_response_data = token_response.json()
+    if "access_token" not in token_response_data:
+        raise HTTPException(status_code=400, detail="Failed to retrieve access token")
+    access_token = token_response_data["access_token"]
+    user_info_response = requests.get(USER_INFO_URL, headers={"Authorization": f"Bearer {access_token}"})
+    user_info = user_info_response.json()
+    return {"message": "Login successful", "user": user_info}
