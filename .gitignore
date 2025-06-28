@@ -30,8 +30,6 @@ pids
 # Next.js cache
 .next/cache/
 
-# Public assets
-public/
 
 # === FastAPI Backend ===
 # Python
