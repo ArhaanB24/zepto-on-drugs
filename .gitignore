@@ -1,12 +1,14 @@
-# Byte-compiled / optimized / DLL files
+# Python Specific
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
 
-# Distribution / packaging
+# FastAPI Specific
+instance/
+.webassets-cache
+
+# Build and Distribution
 .Python
 build/
 develop-eggs/
@@ -26,11 +28,11 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Installer logs
+# Installer Logs
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Test and Coverage Reports
 htmlcov/
 .tox/
 .nox/
@@ -49,49 +51,10 @@ cover/
 *.mo
 *.pot
 
-# Django specific
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask specific
-instance/
-.webassets-cache
-
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-# Include Pipfile.lock if necessary; exclude otherwise
-#Pipfile.lock
-
-# poetry
-#poetry.lock
-
-# pdm
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# PEP 582
-__pypackages__/
-
-# Celery
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath
-*.sage.py
-
-# Environments
+# Python Environments
 .env
 .venv
 env/
@@ -99,45 +62,25 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+__pypackages__/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# Dependency Managers
+Pipfile.lock
+poetry.lock
+.pdm.toml
+.pdm-python
+.pdm-build/
 
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
+# Type Checking and Debugging
 .mypy_cache/
 .dmypy.json
 dmypy.json
-
-# Pyre
 .pyre/
-
-# pytype
 .pytype/
-
-# Cython debug symbols
 cython_debug/
-
-# Ruff
 .ruff_cache/
 
-# PyPI configuration
-.pypirc
-
-# Cursor
-.cursorignore
-.cursorindexingignore
-
-# Visual Studio Code
-.vscode/
-
-# Dependencies
+# Node.js and Next.js Specific
 node_modules/
 .pnp
 .pnp.*
@@ -147,31 +90,53 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
+# Next.js Build and Export
+.next/
+.out/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
 # Testing
 /coverage
-
-# Next.js
-.next/
-/out/
 
 # Production
 /build
 
-# macOS
-.DS_Store
+# Vercel
+.vercel
 
-# Misc
-*.pem
-
-# Debug
+# Logs and Temporary Files
+debug.log
+temp/
+*.tmp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Vercel
-.vercel
+# macOS
+.DS_Store
 
-# TypeScript
-*.tsbuildinfo
-next-env.d.ts
+# Environment Files
+*.pem
+
+# Editor Configurations
+.vscode/
+.idea/
+*.iml
+*.iws
+out/
+
+# Misc
+*.swp
+*.swo
+*.orig
+*.rej
+*.bak
+*.old
+*.log
+*.log.*
+
+
