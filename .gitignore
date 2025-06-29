@@ -154,6 +154,7 @@ docker-compose.dev.yml
 # Secrets and keys
 *.pem
 *.key
+*.json
 secrets/
 
 # Backup files
