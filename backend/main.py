@@ -3,7 +3,7 @@ import os
 import firebase_admin
 from firebase_admin import credentials
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse,JSONResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 cred = credentials.Certificate("incubate-4b884-firebase-adminsdk-fbsvc-abcd1f9767.json")
 firebase_admin.initialize_app(cred)
 
+app = FastAPI()
 
 baseurl = "http://127.0.0.1:8000"
 CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -19,6 +20,14 @@ REDIRECT_URI = f"{baseurl}/auth/callback"
 AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/auth"
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 USER_INFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo"
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (change to specific origins for better security)
+    allow_credentials=True,  # Allow cookies and authentication headers
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.post("/auth/login")
 def login(action:str):
@@ -30,8 +39,9 @@ def login(action:str):
         "response_type": "code",
         "scope": "openid%20email%20profile",
     }
+    print("REDIRECTING")
     auth_url = f"{AUTHORIZATION_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}"
-    return RedirectResponse(auth_url)
+    return JSONResponse({"auth_url": auth_url})
 
 @app.get("/auth/callback")
 def callback(code:str = None):
