@@ -139,7 +139,20 @@ export default function Questionnaire() {
         return null;
     }
   };
-
+  // make a new route in fastapi and send post request on submit
+  const sendFormData = (formData) => {
+    console.log("SENDING...")
+      fetch('http://localhost:8000/api/quest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify(formData), 
+          })
+            .then(response => response.json()) 
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error:', error));
+            }
   return (
     <div className="min-h-screen font-serif bg-background">
       <main className="relative">
@@ -166,13 +179,14 @@ export default function Questionnaire() {
               {renderStepContent()}
 
               {/* Navigation */}
+              
               <NavigationButtons
                 currentStep={currentStep}
                 totalSteps={TOTAL_STEPS}
                 prevStep={prevStep}
                 nextStep={nextStep}
                 isStepValid={isStepValid}
-                onSubmit={() => alert("Form submitted! (Demo)")}
+                onSubmit={() => sendFormData(formData)}
               />
             </div>
           </div>
