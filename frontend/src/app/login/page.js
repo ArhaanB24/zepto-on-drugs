@@ -1,8 +1,30 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function Login() {
+  const authRequest = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/auth/login?action=start_auth", {
+          method: "POST",
+          });
+
+          if (!response.ok) {
+              throw new Error("Failed to send request");
+          }
+
+          const data = await response.json();
+          console.log("Response from FastAPI:", data);
+          if (data.auth_url){
+            window.location.href = data.auth_url;
+          }
+      } catch (error) {
+          console.error("Error:", error);
+      }
+  };
   return (
     <div className="min-h-screen font-serif bg-background">
       <main className="relative flex min-h-screen">
@@ -14,7 +36,6 @@ export default function Login() {
             <div className="absolute bottom-1/3 left-1/6 w-24 h-24 rounded-full border border-primary/10"></div>
             <div className="absolute top-1/2 right-1/3 w-16 h-16 rounded-full border border-primary/15"></div>
           </div>
-
           <div className="w-full max-w-md relative z-10">
             {/* Logo/Brand */}
             <div className="text-center mb-12">
@@ -53,6 +74,7 @@ export default function Login() {
                   <Button
                     className="w-full h-14 text-base bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-gray-300 transition-all duration-300 relative overflow-hidden"
                     variant="outline"
+                    onClick={authRequest}
                   >
                     {/* Subtle shine effect */}
                     <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover/button:translate-x-full transition-transform duration-700"></div>
@@ -185,5 +207,6 @@ export default function Login() {
         </div>
       </main>
     </div>
+    
   );
 }
