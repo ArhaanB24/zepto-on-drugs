@@ -6,12 +6,15 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import RedirectResponse,JSONResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 
 cred = credentials.Certificate("incubate-4b884-firebase-adminsdk-fbsvc-abcd1f9767.json")
 firebase_admin.initialize_app(cred)
 
 app = FastAPI()
+# use pydantic to take in form data
+
 
 baseurl = "http://127.0.0.1:8000"
 CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -44,7 +47,7 @@ def login(action:str):
     return JSONResponse({"auth_url": auth_url})
 
 @app.get("/auth/callback")
-def callback(code:str = None):
+def callback(code:str = ""):
     if not code:
         raise HTTPException(status_code=400, detail="Authorization code not provided")
     token_data = {
@@ -62,3 +65,37 @@ def callback(code:str = None):
     user_info_response = requests.get(USER_INFO_URL, headers={"Authorization": f"Bearer {access_token}"})
     user_info = user_info_response.json()
     return {"message": "Login successful", "user": user_info}
+
+class MedicalFormData(BaseModel):
+    allergies: str
+    allopathicMedications: str
+    ayurvedicMedications: str
+    bloodPressure: str
+    currentMedicalConditions: str
+    currentMedications: str
+    dob: str
+    ethnicity: str
+    familyHistory: str
+    heartRate: str
+    height: str
+    liverFunctionTest: str
+    maritalStatus: str
+    name: str
+    numberOfChildren: str
+    officiating: str
+    ongoingTreatment: str
+    otcMedications: str
+    pastMedicalConditions: str
+    renalFunctionTest: str
+    residence: str
+    sex: str
+    surgicalHistory: str
+    weight: str
+
+@app.post("/api/quest")
+async def handleForm(data:MedicalFormData):
+    if data:
+        print(data)
+        return {"message": "Operation successful"}
+    else:
+        return {"message": "Nahi Mila Kuch"}
