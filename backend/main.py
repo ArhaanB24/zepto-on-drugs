@@ -1,5 +1,5 @@
-from fastapi import FastAPI
 import os
+from fastapi import FastAPI
 import firebase_admin
 from firebase_admin import credentials
 from fastapi import FastAPI, HTTPException
@@ -7,14 +7,27 @@ from fastapi.responses import RedirectResponse,JSONResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
+from supabase import create_client
+from contextlib import asynccontextmanager
+from dotenv import load_dotenv
+load_dotenv()
 
 cred = credentials.Certificate("incubate-4b884-firebase-adminsdk-fbsvc-abcd1f9767.json")
 firebase_admin.initialize_app(cred)
 
-app = FastAPI()
-# use pydantic to take in form data
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.shared_data = {}
+    yield
 
+app = FastAPI(lifespan=lifespan)
+# use pydantic to take in form data
+url = os.environ.get("SUPABASE_URL")
+key = os.environ.get("SUPABASE_KEY")
+print(url,key)
+if url and key:
+
+    supabase = create_client(url,key)
 
 baseurl = "http://127.0.0.1:8000"
 CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
@@ -32,6 +45,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+
+
 @app.post("/auth/login")
 def login(action:str):
     if action != "start_auth":
@@ -44,7 +59,10 @@ def login(action:str):
     }
     print("REDIRECTING")
     auth_url = f"{AUTHORIZATION_URL}?{'&'.join(f'{k}={v}' for k, v in params.items())}"
+    
     return JSONResponse({"auth_url": auth_url})
+
+
 
 @app.get("/auth/callback")
 def callback(code:str = ""):
@@ -64,6 +82,20 @@ def callback(code:str = ""):
     access_token = token_response_data["access_token"]
     user_info_response = requests.get(USER_INFO_URL, headers={"Authorization": f"Bearer {access_token}"})
     user_info = user_info_response.json()
+    print(user_info)
+    app.state.shared_data = {"google_id":user_info['id']}
+    existing = supabase.table("users").select("id").eq("google_token", user_info["id"]).execute()
+    if existing.data:
+        # redirect to the home page
+        return {"message": "User already exists", "id": existing.data[0]["id"]}
+    user_data = {
+        "google_token": user_info["id"],
+        "email": user_info["email"],
+        "name": user_info["name"],
+        "picture": user_info["picture"]
+    }
+    response = supabase.table("users").insert(user_data).execute()
+    # redirect to login form
     return {"message": "Login successful", "user": user_info}
 
 class MedicalFormData(BaseModel):
