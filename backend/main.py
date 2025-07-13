@@ -86,8 +86,8 @@ def callback(code:str = ""):
     app.state.shared_data = {"google_id":user_info['id']}
     existing = supabase.table("users").select("id").eq("google_token", user_info["id"]).execute()
     if existing.data:
-        # redirect to the home page
-        return {"message": "User already exists", "id": existing.data[0]["id"]}
+        # redirect to the frontend dashboard
+        return RedirectResponse(url="http://localhost:3000/dashboard?user_id=" + str(existing.data[0]["id"]))
     user_data = {
         "google_token": user_info["id"],
         "email": user_info["email"],
@@ -95,8 +95,8 @@ def callback(code:str = ""):
         "picture": user_info["picture"]
     }
     response = supabase.table("users").insert(user_data).execute()
-    # redirect to login form
-    return {"message": "Login successful", "user": user_info}
+    # redirect to frontend dashboard
+    return RedirectResponse(url="http://localhost:3000/dashboard?user_id=" + str(response.data[0]["id"]))
 
 class MedicalFormData(BaseModel):
     allergies: str
@@ -131,3 +131,14 @@ async def handleForm(data:MedicalFormData):
         return {"message": "Operation successful"}
     else:
         return {"message": "Nahi Mila Kuch"}
+
+@app.get("/api/user/{user_id}")
+def get_user(user_id: int):
+    try:
+        user = supabase.table("users").select("*").eq("id", user_id).execute()
+        if user.data:
+            return {"user": user.data[0]}
+        else:
+            raise HTTPException(status_code=404, detail="User not found")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

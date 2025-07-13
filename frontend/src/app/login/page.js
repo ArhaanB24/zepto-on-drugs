@@ -3,27 +3,27 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 
 export default function Login() {
+  const { login, isAuthenticated, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated && !loading) {
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, loading, router]);
+
   const authRequest = async () => {
-      try {
-        const response = await fetch("http://127.0.0.1:8000/auth/login?action=start_auth", {
-          method: "POST",
-          });
-
-          if (!response.ok) {
-              throw new Error("Failed to send request");
-          }
-
-          const data = await response.json();
-          console.log("Response from FastAPI:", data);
-          if (data.auth_url){
-            window.location.href = data.auth_url;
-          }
-      } catch (error) {
-          console.error("Error:", error);
-      }
+    try {
+      await login();
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
   return (
     <div className="min-h-screen font-serif bg-background">
@@ -207,6 +207,6 @@ export default function Login() {
         </div>
       </main>
     </div>
-    
+
   );
 }
